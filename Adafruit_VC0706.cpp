@@ -559,8 +559,7 @@ uint8_t *Adafruit_VC0706::readPicture(uint8_t n, uint32_t delay_time) {
                     delay_time >> 8,
                     delay_time & 0xFF};
 
-  if (!runCommand(VC0706_READ_FBUF, args, sizeof(args), 5, false))
-  {
+  if (!runCommand(VC0706_READ_FBUF, args, sizeof(args), 5, false)) {
     Serial.println("VC0706: Read fbuf failed - delay time too small?");
     return 0;
   }
