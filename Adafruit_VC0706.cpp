@@ -544,7 +544,7 @@ uint8_t Adafruit_VC0706::available(void) { return bufferLen; }
     @returns Pointer to buffer containing n bytes of picture data
 */
 /**************************************************************************/
-uint8_t *Adafruit_VC0706::readPicture(uint8_t n) {
+uint8_t *Adafruit_VC0706::readPicture(uint8_t n, uint32_t delay_time) {
   uint8_t args[] = {0x0C,
                     0x0,
                     0x0A,
@@ -556,14 +556,17 @@ uint8_t *Adafruit_VC0706::readPicture(uint8_t n) {
                     0,
                     0,
                     n,
-                    CAMERADELAY >> 8,
-                    CAMERADELAY & 0xFF};
+                    delay_time >> 8,
+                    delay_time & 0xFF};
 
   if (!runCommand(VC0706_READ_FBUF, args, sizeof(args), 5, false))
+  {
+    Serial.println("VC0706: Read fbuf failed - delay time too small?");
     return 0;
+  }
 
   // read into the buffer PACKETLEN!
-  if (readResponse(n + 5, CAMERADELAY) == 0)
+  if (readResponse(n + 5, delay_time) == 0)
     return 0;
 
   frameptr += n;
