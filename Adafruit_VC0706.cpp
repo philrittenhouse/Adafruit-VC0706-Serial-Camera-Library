@@ -541,6 +541,7 @@ uint8_t Adafruit_VC0706::available(void) { return bufferLen; }
 /*!
     @brief Read in picture data
     @param n Number of bytes
+    @param delay_time The camera's delay time between command and data. 
     @returns Pointer to buffer containing n bytes of picture data
 */
 /**************************************************************************/
